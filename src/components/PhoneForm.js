@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
 class PhoneForm extends Component {
+  input = null;
+
   //1) state로 기본 설정
   state = {
     name: "",
@@ -18,6 +20,15 @@ class PhoneForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onCreate(this.state); //props로 받았던 onCreate를 호출한다.
+
+    //입력 후 초기화
+    this.setState({
+      name: "",
+      phone: "",
+    });
+
+    //focus
+    this.input.focus();
   };
 
   render() {
@@ -31,6 +42,7 @@ class PhoneForm extends Component {
           placeholder="이름"
           onChange={this.handleChange} //이벤트 속성은 문자열이 아닌 {this.onNameHandler}로 작성.
           value={this.state.name}
+          ref={(ref) => (this.input = ref)}
         />
         <input
           name="phone"
@@ -39,9 +51,9 @@ class PhoneForm extends Component {
           value={this.state.phone}
         />
         <button type="submit">등록</button>
-        <div>
+        {/* <div>
           {this.state.name} {this.state.phone}
-        </div>
+        </div> */}
       </form>
     );
   }
